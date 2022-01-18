@@ -1,0 +1,1 @@
+~/Library/Application Support/SuperCollider/downloaded-quarks/Require=https://github.com/scztt/Require.quark@tags/1.0.3

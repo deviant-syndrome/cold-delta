@@ -6,7 +6,7 @@
 		var partialNum = count.rand();
 		var duration = data[partialNum * 3].sum;
 
-		if (length > duration, { longest = duration });
+		if (duration > longest, { longest = duration });
 
 		randomDataFragment[index * 3] = data[partialNum * 3];
 		randomDataFragment[index * 3 + 1] = data[partialNum * 3 + 1];
@@ -14,15 +14,10 @@
 
 	});
 	// stretch partials to the size of longest one
-	numPartials.do({ arg index;
-		randomDataFragment[index * 3] = randomDataFragment[index * 3].normalize(0, longest);
-	});
+	// numPartials.do({ arg index;
+	// 	randomDataFragment[index * 3] = randomDataFragment[index * 3].normalize(0, longest);
+	// });
     randomDataFragment;
 };
 
 ~randomPartialPicker = { | numPartials | ~randomPartialPickerProto.value(_, numPartials); }
-
-
-// partials crossfade from one to another
-//
-//

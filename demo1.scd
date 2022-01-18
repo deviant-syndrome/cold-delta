@@ -1,13 +1,17 @@
-(Require("spear.scd");
+(//Quarks.load(thisProcess.nowExecutingPath.dirname +/+ "quarks.txt");
+
+ Require("spear.scd");
  Require("e-drums.scd");
 
-~spearBuilder.value(thisProcess.nowExecutingPath.dirname +/+ "/partials/composite1.csv",
+
+/*~spearBuilder.value("/partials/composite1.csv",
 	mixin: { DC.ar(0); },
-	partialPicker: ~allPartialsPicker
-);
+	partialPicker: ~randomPartialPicker.value(64)
+);*/
+~singleSpearBuilder.value("/partials/snare.csv");
 
 
 )
 
-(postln(thisProcess.nowExecutingPath.dirname))
+
 s.freeAll;

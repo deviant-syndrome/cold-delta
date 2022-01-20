@@ -41,6 +41,9 @@ Require("partial-gen.scd");
    data;
 };
 
+// test spear - returns function that plays a synth and kills it
+// prod spear - returns PBind event
+
 // modulationg with partials:
 
 // 1. design a synth-pad

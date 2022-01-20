@@ -31,8 +31,10 @@
 	});
 };
 
-~simplePartialGen = { | data | ~partialGen.value(data, 1, { | i | DC.ar(1)}, { | i | DC.ar(1)} ); }
+~simplePartialGen = { | data | ~partialGen.value(data, 1, { | i | DC.ar(1) }, { | i | DC.ar(1)} ); };
+~movingPartialGen = { | data | ~partialGen.value(data, 1, { | i | DC.ar(1) }, ~movingParticleEnvelope) };
 
-~movingParticleEnvelope = { }
+~movingParticleEnvelope = { | i | LFNoise1.ar(0.15 + 0.3.rand) };
 
-~particleFreqVibrato = { }
+// ~particleFreqVibrato = { }
+// todo loops

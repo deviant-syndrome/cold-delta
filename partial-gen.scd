@@ -1,7 +1,8 @@
 ~partialGen = { | data,
 	              timeScale,
 	              freqModFactory,
-	              ampModFactory
+	              ampModFactory,
+	              loopNode = nil
 	            |
 
 	var count = data.size.div(3);
@@ -13,8 +14,9 @@
 		var partialAmpPoints = data[access + 2];
 
 
-		var ampEnvArray = Env(partialAmpPoints, partialTimePoints);
-		var freqEnvArray = Env(partialFreqPoints, partialTimePoints);
+		// choose releaseNode
+		var ampEnvArray = Env(partialAmpPoints, partialTimePoints, releaseNode: partialTimePoints.size - 2, loopNode: loopNode);
+		var freqEnvArray = Env(partialFreqPoints, partialTimePoints, releaseNode: partialTimePoints.size - 2, loopNode: loopNode);
 
 		var ampEnvSig = EnvGen.ar(ampEnvArray, timeScale: timeScale);
 		var freqEnvSig = EnvGen.ar(freqEnvArray, timeScale: timeScale);
@@ -31,10 +33,15 @@
 	});
 };
 
+
+
 ~simplePartialGen = { | data | ~partialGen.value(data, 1, { | i | DC.ar(1) }, { | i | DC.ar(1)} ); };
 ~movingPartialGen = { | data | ~partialGen.value(data, 1, { | i | DC.ar(1) }, ~movingParticleEnvelope) };
+
+~loopedPartialGen = { | data | ~partialGen.value(data, 1, { | i | DC.ar(1) }, { | i | DC.ar(1)}, 0); } ;
 
 ~movingParticleEnvelope = { | i | LFNoise1.ar(0.15 + 0.3.rand) };
 
 // ~particleFreqVibrato = { }
-// todo loops
+// todo longest partial kills synth?
+

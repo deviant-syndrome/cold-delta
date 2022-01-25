@@ -4,6 +4,7 @@ Require("partial-gen.scd");
 	                mixin,
 	                partialPicker,
 	                partialGen,
+	                gate = 1,
 		            attack = 0.2,
 	                decay = 4,
 	                sustain = 0.4,
@@ -15,11 +16,12 @@ Require("partial-gen.scd");
 
 	SynthDef(\heck, { | gate = 1 |
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
-
+		var subGate = Done.kr(env);
 
 		var partials = SynthDef.wrap(
-			partialGen, prependArgs: [data]
+			partialGen, prependArgs: [data, 4]
 		);
+
 
 		var transient = SynthDef.wrap(
             mixin

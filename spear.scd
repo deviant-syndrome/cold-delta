@@ -14,12 +14,17 @@ Require("partial-gen.scd");
 	var initialData = CSVFileReader.readInterpret(thisProcess.nowExecutingPath.dirname +/+ fileName);
 	var data = partialPicker.value(initialData);
 
+	// todo:
+	// make two version of this
+	//    -> One shot
+	//    -> Sustained
+
 	SynthDef(\heck, { | gate = 1 |
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 		var subGate = Done.kr(env);
 
 		var partials = SynthDef.wrap(
-			partialGen, prependArgs: [data, 4]
+			partialGen, prependArgs: [data, 4, gate]
 		);
 
 

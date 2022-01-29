@@ -35,7 +35,7 @@
 			ampModFactory,  prependArgs: [i]
         );
 
-		FreeSelf.kr(TDelay.kr(DC.kr(1 * (loopNode ?? 1)), ttl));
+		//FreeSelf.kr(TDelay.kr(DC.kr(1 * (loopNode ?? 1)), ttl));
 
 		SinOsc.ar(freqEnvSig * freqModAr, 0, ampEnvSig * ampModAr)
 	});

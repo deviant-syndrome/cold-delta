@@ -4,6 +4,7 @@ Require("partial-gen.scd");
 	                mixin,
 	                partialPicker,
 	                partialGen,
+	                envFactory,
 	                gate = 1,
 		            attack = 0.2,
 	                decay = 4,
@@ -14,13 +15,8 @@ Require("partial-gen.scd");
 	var initialData = CSVFileReader.readInterpret(thisProcess.nowExecutingPath.dirname +/+ fileName);
 	var data = partialPicker.value(initialData);
 
-	// todo:
-	// make two version of this
-	//    -> One shot
-	//    -> Sustained
-
 	SynthDef(\heck, { | gate = 1 |
-		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+		var env = EnvGen.ar(envFactory.value(attack, decay, sustain, release), gate, doneAction: 2);
 		var subGate = Done.kr(env);
 
 		var partials = SynthDef.wrap(
@@ -40,13 +36,23 @@ Require("partial-gen.scd");
 	~spearBuilder.value(fileName,
 		mixin: { DC.ar(0); },
 		partialPicker: ~allPartialsPicker,
-		partialGen: ~simplePartialGen
+		partialGen: ~simplePartialGen,
+		envFactory: ~percussionEnvelope
 	);
 };
 
 ~allPartialsPicker = { | data |
    data;
 };
+
+~percussionEnvelope = { | attack, decay, sustain, release |
+	Env.perc(attack, release);
+}
+
+~sustainedEnvelope = { | attack, decay, sustain, release |
+	Env.adsr(attack, decay, sustain, release);
+}
+
 
 // test spear - returns function that plays a synth and kills it
 // prod spear - returns PBind event

@@ -31,8 +31,9 @@
 	counts = counts.add(divisor);
 	build.value(level);
 
-	postln(pattern);
+	pattern
 };
+
 
 
 

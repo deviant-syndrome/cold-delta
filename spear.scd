@@ -47,11 +47,11 @@ Require("partial-gen.scd");
 
 ~percussionEnvelope = { | attack, decay, sustain, release |
 	Env.perc(attack, release);
-}
+};
 
 ~sustainedEnvelope = { | attack, decay, sustain, release |
 	Env.adsr(attack, decay, sustain, release);
-}
+};
 
 
 // test spear - returns function that plays a synth and kills it

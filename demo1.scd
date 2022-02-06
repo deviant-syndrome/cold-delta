@@ -1,19 +1,26 @@
-(var kickPattern; var ridePattern;
+(var kickPattern; var ridePattern; var strum;
  //Quarks.load(thisProcess.nowExecutingPath.dirname +/+ "quarks.txt");
  Require("spear.scd");
  Require("e-drums.scd");
  Require("spear-rand-partials.scd");
  Require("e-pattern.scd");
  Require("pat-utils.scd");
+ Require("spear-strum.scd");
 
 
 ~randomTextureSpearBuilder.value("/partials/low-res/composite1.csv", "texture1", 20);
+~textureSpearBuilder.value("/partials/low-res/guitar1.csv", "texture2", 20);
 
+strum = ~spearStrumPartials.value("/partials/hi-res/choir1.csv");
 
 kickPattern = ~loopForever.value({ ~pat8ths.value([1,0,1,0,1,0]); });
 ridePattern = ~loopForever.value({ |i| ~pat8ths.value(~getPattern.value(8 - i,3 + i.rand)); });
 
 ~player = Pspawner({|sp|
+	sp.wait(1);
+
+	strum.value(sp);
+
 	sp.seq(Ppar([
 		Pbind(
 			\instrument, "texture1",
@@ -41,18 +48,4 @@ ridePattern = ~loopForever.value({ |i| ~pat8ths.value(~getPattern.value(8 - i,3 
 
 
 ~player.stop();
-
-s.options.maxLogins = 2;
-s.reboot;
 s.freeAll;
-s.defaultGroups;
-
-(
-r = Server(
-    \remote4,
-    // example NetAddr of the machine that runs scsynth on standard port
-    NetAddr("127.0.0.1", 57110),
-    s.options,        // make sure all remote servers use the same options
-    1                 // and when desired, set fixed client by hand
-);
-)

@@ -42,6 +42,16 @@ Require("partial-gen.scd");
 	);
 };
 
+~textureSpearBuilder = { |fileName, name |
+  ~spearBuilder.value(fileName,
+	name: name,
+	mixin: { DC.ar(0); },
+	partialPicker: ~allPartialsPicker,
+	partialGen: ~simplePartialGen,
+ 	envFactory: ~sustainedEnvelope
+  );
+};
+
 ~randomTextureSpearBuilder = { |fileName, name, numPartials |
   ~spearBuilder.value(fileName,
 	name: name,

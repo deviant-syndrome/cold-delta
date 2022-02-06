@@ -17,15 +17,15 @@
 		var partialAmpPoints = data[access + 2];
 
 		var ampEnvArray = Env(partialAmpPoints, partialTimePoints,
-			releaseNode: releaseNode.value(partialTimePoints),
+			releaseNode: releaseNode.value(partialTimePoints.size),
 			loopNode: loopNode);
 
 		var freqEnvArray = Env(partialFreqPoints, partialTimePoints,
-			releaseNode: releaseNode.value(partialTimePoints),
+			releaseNode: releaseNode.value(partialTimePoints.size),
 			loopNode: loopNode);
 
-		var ampEnvSig = EnvGen.ar(ampEnvArray, timeScale: timeScale);
-		var freqEnvSig = EnvGen.ar(freqEnvArray, timeScale: timeScale);
+		var ampEnvSig = EnvGen.ar(ampEnvArray, timeScale: timeScale, gate: gate);
+		var freqEnvSig = EnvGen.ar(freqEnvArray, timeScale: timeScale, gate: gate);
 
 		var freqModAr = SynthDef.wrap(
 			freqModFactory, prependArgs: [i]
@@ -43,13 +43,17 @@
 ~loopReleaseNode = { | size | size - 2; };
 
 ~simplePartialGen = { | data, ttl, gate |
-	~partialGen.value(data, ttl, gate, 1, { | i | DC.ar(1) }, { | i | DC.ar(1)}, nil, ~noReleaseNoe ); };
+	~partialGen.value(data, ttl, gate, 1, { | i | DC.ar(1) }, { | i | DC.ar(1)}, nil, ~noReleaseNode ); };
 
 ~movingPartialGen = { | data, ttl, gate |
 	~partialGen.value(data, ttl, gate, 1, { | i | DC.ar(1) }, ~movingParticleEnvelope) };
 
+~movingLoopingPartialGen = { | data, ttl, gate |
+	~partialGen.value(data, ttl, gate, 1, { | i | DC.ar(1) }, ~movingParticleEnvelope, 0, ~loopReleaseNode) };
+
+
 ~loopedPartialGen = { | data, ttl, gate |
-	~partialGen.value(data, ttl, gate, { | i | DC.ar(1) }, { | i | DC.ar(1)}, 0); } ;
+	~partialGen.value(data, ttl, gate, 1, { | i | DC.ar(1) }, { | i | DC.ar(1)}, 0, ~loopReleaseNode ); } ;
 
 ~movingParticleEnvelope = { | i | LFNoise1.ar(0.15 + 0.3.rand) };
 

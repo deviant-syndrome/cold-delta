@@ -2,22 +2,23 @@ Require("partial-gen.scd");
 
 ~spearBuilder = { | fileName,
 	                mixin,
+	                name,
 	                partialPicker,
 	                partialGen,
 	                envFactory,
 	                gate = 1,
 		            attack = 0.2,
-	                decay = 4,
+	                decay = 1,
 	                sustain = 0.4,
 	                release = 0.5
 	              |
 
-	var initialData = CSVFileReader.readInterpret(thisProcess.nowExecutingPath.dirname +/+ fileName);
+	var path = thisProcess.nowExecutingPath.dirname +/+ fileName;
+	var initialData = CSVFileReader.readInterpret(path);
 	var data = partialPicker.value(initialData);
 
-	SynthDef(\heck, { | gate = 1 |
+	SynthDef(name, { | gate = 1, amp = 0.15 |
 		var env = EnvGen.ar(envFactory.value(attack, decay, sustain, release), gate, doneAction: 2);
-		var subGate = Done.kr(env);
 
 		var partials = SynthDef.wrap(
 			partialGen, prependArgs: [data, 4, gate]
@@ -28,8 +29,8 @@ Require("partial-gen.scd");
             mixin
         );
 
-		Out.ar(0, ((partials * env * 0.15) + transient) ! 2);
-	}).play;
+		Out.ar(0, ((partials * env * amp) + transient) ! 2);
+	}).add;
 };
 
 ~singleSpearBuilder = { | fileName |
@@ -39,6 +40,16 @@ Require("partial-gen.scd");
 		partialGen: ~simplePartialGen,
 		envFactory: ~percussionEnvelope
 	);
+};
+
+~randomTextureSpearBuilder = { |fileName, name, numPartials |
+  ~spearBuilder.value(fileName,
+	name: name,
+	mixin: { DC.ar(0); },
+	partialPicker: ~randomPartialPicker.value(numPartials),
+	partialGen: ~movingLoopingPartialGen,
+ 	envFactory: ~sustainedEnvelope
+  );
 };
 
 ~allPartialsPicker = { | data |
@@ -52,13 +63,3 @@ Require("partial-gen.scd");
 ~sustainedEnvelope = { | attack, decay, sustain, release |
 	Env.adsr(attack, decay, sustain, release);
 };
-
-
-// test spear - returns function that plays a synth and kills it
-// prod spear - returns PBind event
-
-// modulationg with partials:
-
-// 1. design a synth-pad
-// 2. N synth pad, each pad it modulated by a particle
-// technical: synthdef wrapping? 

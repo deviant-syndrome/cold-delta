@@ -26,7 +26,7 @@
 
 			var ampEnvSig = EnvGen.ar(ampEnvArray, timeScale: 0.5);
 			var freqEnvSig = EnvGen.ar(freqEnvArray, timeScale: 0.5);
-			Out.ar(0, SinOsc.ar(freqEnvSig * 0.5, 0, ampEnvSig * masterEnv) ! 2)
+			Out.ar(0, HPF.ar(FSinOsc.ar(freqEnvSig * 0.5, 0, ampEnvSig * masterEnv), 100) ! 2)
 		}).add;
 
 		particleBind = Pbind(

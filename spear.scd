@@ -1,4 +1,5 @@
 Require("partial-gen.scd");
+Require("bowed-gen.scd");
 
 ~spearBuilder = { | fileName,
 	                mixin,
@@ -13,8 +14,9 @@ Require("partial-gen.scd");
 	                release = 0.5
 	              |
 
-	var path = thisProcess.nowExecutingPath.dirname +/+ fileName;
-	var initialData = CSVFileReader.readInterpret(path);
+	var path = thisProcess.nowExecutingPath.dirname +/+ "heck.ar"; //fileName;
+	var initialData = Object.readArchive(path);//CSVFileReader.readInterpret(path);
+
 	var data = partialPicker.value(initialData);
 
 	SynthDef(name, { | gate = 1, amp = 0.15 |
@@ -31,6 +33,7 @@ Require("partial-gen.scd");
 
 		Out.ar(0, ((partials * env * amp) + transient) ! 2);
 	}).add;
+	//initialData.writeArchive(thisProcess.nowExecutingPath.dirname +/+ "heck.ar")
 };
 
 ~singleSpearBuilder = { | fileName |
@@ -51,6 +54,18 @@ Require("partial-gen.scd");
  	envFactory: ~sustainedEnvelope
   );
 };
+
+~textureBowedSpearBuilder = { |fileName, name, numPartials |
+  ~spearBuilder.value(fileName,
+	name: name,
+	mixin: { DC.ar(0); },
+	partialPicker: ~randomPartialPicker.value(numPartials),
+	partialGen: ~loopedBowedGen,
+ 	envFactory: ~sustainedEnvelope
+  );
+};
+
+
 
 ~randomTextureSpearBuilder = { |fileName, name, numPartials |
   ~spearBuilder.value(fileName,

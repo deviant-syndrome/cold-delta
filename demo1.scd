@@ -1,11 +1,11 @@
 (var kickPattern; var ridePattern; var strum;
  //Quarks.load(thisProcess.nowExecutingPath.dirname +/+ "quarks.txt");
- Require("spear.scd");
- Require("e-drums.scd");
- Require("spear-rand-partials.scd");
+ Require("instruments/spectral/spear.scd");
+ Require("instruments/e-drums.scd");
+ Require("instruments/spectral/spear-rand-partials.scd");
  Require("e-pattern.scd");
  Require("pat-utils.scd");
- Require("spear-strum.scd");
+ Require("instruments/spectral/spear-strum.scd");
 
 
 // ~randomTextureSpearBuilder.value("/partials/low-res/composite1.csv", "texture1", 20);

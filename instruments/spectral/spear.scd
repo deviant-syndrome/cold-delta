@@ -1,5 +1,5 @@
-Require("partial-gen.scd");
-Require("bowed-gen.scd");
+Require("bodies/partial-gen.scd");
+Require("bodies/bowed-gen.scd");
 
 ~spearBuilder = { | fileName,
 	                mixin,

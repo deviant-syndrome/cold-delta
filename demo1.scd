@@ -1,6 +1,6 @@
 (var kickPattern; var ridePattern; var strum;
  //Quarks.load(thisProcess.nowExecutingPath.dirname +/+ "quarks.txt");
- Require("instruments/spectral/spear.scd");
+ Require("instruments/spectral/builders.scd");
  Require("instruments/e-drums.scd");
  Require("instruments/spectral/spear-rand-partials.scd");
  Require("e-pattern.scd");

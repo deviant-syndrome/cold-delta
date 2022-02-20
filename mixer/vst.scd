@@ -24,19 +24,24 @@
 	~fx.gui;
 )
 (
-	var channel1 = Bus.audio(s);
-    var channel2 = Bus.audio(s);
-	
-	var ch1, ch1_input;
-	// create a simple fx channel
-	SynthDef(\channelGain, { | gains = 0.5, out = 0 |
-		var gained = In.ar(0, 2) * gains;
-		ReplaceOut.ar(out , gained );
-	}).add;
+	var routing = Dictionary.newFrom([
+		\throbe, Dictionary(),
+	   \cynbals, Dictionary()
 
-	~ch1 = Group.basicNew(s, 1);
-	~ch1_gain = Synth.tail(ch1, \channelGain);
+	]);
+
+	routing.keys.do { arg item, i;
+	   var bus = Bus.audio(s);
+       var strip = Group.basicNew(s, 1);
+	   var gain = Synth.tail(strip, \channelGain, [\out, bus]);
+
+	   routing[item].put(\gain, gain);
+   };
+   routing.postln;
+	~globalRouting = routing;
 )
+
+
 (
 	~ch1.dumpTree;
 	~ch1_gain.set(\gains, 0.7);

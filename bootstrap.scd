@@ -6,10 +6,14 @@
 // init routing
 // init sync messages / event streams
 // boot server
+Require("conventions.scd");
 Require("mixer/channel-strip.scd");
 
 ~initChannelStrip.value();
 
 Require("mixer/routing.scd");
-
+Require("events/osc-triggers.scd");
+Require("media.scd");
+Require("instruments/throb-playback.scd");
+Require("instruments/throb-listener.scd");
 //Require("gui.scd");

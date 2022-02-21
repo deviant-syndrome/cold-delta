@@ -15,6 +15,7 @@ routing.keys.do { arg item, i;
 	routing[item].put(\gain, gain);
 	routing[item].put(\busNum, bus.index);
 	routing[item].put(\jack, { arg v; Synth.head(strip, v, [\out, bus.index])});
+	routing[item].put(\send, { arg v; Synth.before(gain, v, [\in, bus.index])});
 
 	busses = busses.add(bus.index);
 };

@@ -1,13 +1,28 @@
 (Require("bootstrap.scd");
 
-SynthDef(\test, { | out = 0 |
-	var sound = SinOsc.ar(440, 0, EnvGen.ar(Env.perc(0.2, 1), Impulse.ar(1)));
-	Out.ar(out, sound ! 2);
-}).add;
+// currentEnvironment.use({
+// 	~context.valueEnvir(exec: { | const_HI_THROB |
+// 			SynthDef(\test, { | out = 0 |
+// 				var impulse = Impulse.kr(1);
+// 				var sound = SinOsc.ar(440, 0, EnvGen.ar(Env.perc(0.2, 1), impulse));
+// 				SendTrig.kr(impulse, 0, const_HI_THROB);
+// 				Out.ar(out, sound ! 2);
+// 			}).add;
+// 	});
+// });
 
-~globalRouting[\throbe][\jack].value(\test);
+~globalRouting[\throbe][\jack].value(\throbBlast);
+~globalRouting[\throbe][\send].value(\throbListenHigh);
 )
 
 (
-	~globalRouting[\throbe][\gain].set(\gains, 3.5);
+	s.freeAll;
+)
+
+(
+	s.makeGui();
+)
+
+(
+	~globalRouting[\throbe][\gain].set(\gains, 0.01);
 )

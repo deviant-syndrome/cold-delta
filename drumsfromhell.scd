@@ -1,5 +1,5 @@
 (
-b = Buffer.read(s, "result.wav");
+b = d
 )
 
 (

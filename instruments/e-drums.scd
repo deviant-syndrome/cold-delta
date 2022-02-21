@@ -42,3 +42,43 @@ SynthDef(\ride, {
 
 	Out.ar(0, (highComponent * highVCA + lowComponent * lowVCA).dup(2));
 }).add;
+
+/*
+(
+
+x = {
+
+	var lodriver, locutoffenv, hidriver, hicutoffenv, freqs, res, thwack;
+
+
+
+	locutoffenv = EnvGen.ar(Env.perc(0.5, 1)) * 20000 + 600;
+
+	lodriver = LPF.ar(WhiteNoise.ar(0.1), locutoffenv);
+
+
+
+	hicutoffenv = 10001 - (EnvGen.ar(Env.perc(1, 3)) * 10000);
+
+	hidriver = HPF.ar(WhiteNoise.ar(0.1), hicutoffenv);
+
+	hidriver = hidriver * EnvGen.ar(Env.perc(1, 0.5, 0.25));
+
+
+
+	thwack = EnvGen.ar(Env.perc(0.001,0.001,1));
+
+
+
+	freqs  = {exprand(2500, 4000)}.dup(60);
+
+	res    = Ringz.ar(lodriver + hidriver + thwack, freqs).mean;
+
+
+
+	EnvGen.ar(Env.perc(0.03, 2), doneAction:2) * LPF.ar((res * 1) + (lodriver * 2) + thwack, 3700).dup;
+
+}.play;
+
+)
+*/

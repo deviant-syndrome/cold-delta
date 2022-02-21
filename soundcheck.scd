@@ -13,6 +13,7 @@
 
 ~globalRouting[\throbe][\jack].value(\throbBlast);
 ~globalRouting[\throbe][\send].value(\throbListenHigh);
+
 )
 
 (
@@ -24,5 +25,5 @@
 )
 
 (
-	~globalRouting[\throbe][\gain].set(\gains, 0.01);
+	~globalRouting[\throbe][\gain].set(\gains, 0.00);
 )

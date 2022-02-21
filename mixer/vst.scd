@@ -9,7 +9,7 @@
 
 // Channels
 //     1 : Drum Track / Sync generator [Standard]
-//     2 :
+//     2 : Cymbals
 (
 	SynthDef(\insert, { arg bus;
     	ReplaceOut.ar(bus, VSTPlugin.ar(In.ar(bus, 2), 2));

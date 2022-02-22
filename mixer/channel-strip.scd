@@ -1,6 +1,7 @@
-SynthDef(\channelGain, { | gains = 0.5, out = 0 |
-	var gained = In.ar(out, 2) * gains;
-	ReplaceOut.ar(out, gained)
+SynthDef(\channelGain, { | gains = 0.5, pos = 0, out = 0 |
+	var gained = In.ar(out, 1) * gains;
+	var panned = Pan2.ar(gained, pos);
+	ReplaceOut.ar(out, panned)
 }).add;
 
 SynthDef(\masterLimiter, { | out = 0 |

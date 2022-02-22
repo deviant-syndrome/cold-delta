@@ -5,14 +5,15 @@
 // ~globalRouting[\throbe][\send].value(\throbListenHigh);
 // ~globalRouting[\chuggs][\gain].set(\gains, 0.3);
 
-~globalRouting[\chuggs][\vstInsert].value("/Library/Audio/Plug-Ins/VST3/NadIR.vst3", true);
-~globalRouting[\chuggs][\vstInsert].value("/Library/Audio/Plug-Ins/VST3/Emissary.vst3");
+~globalRouting[\chuggs][\vstInsert].value("/Library/Audio/Plug-Ins/VST3/NadIR.vst3", false);
+~globalRouting[\chuggs][\vstInsert].value("/Library/Audio/Plug-Ins/VST3/Emissary.vst3", true);
 
 // ~globalRouting[\throbe][\gain].set(\gains, 0.0);
 
 ~globalRouting[\throbe][\jack].value(\throbBlast);
 ~globalRouting[\throbe][\send].value(\throbListenHigh);
-
+~globalRouting[\chuggs][\gain].set(\gains, 0.3);
+~globalRouting[\chuggs][\gain].set(\pos, -1);
 // TempoClock.tempo = 200/60;
 // ~player = Pbind(
 // 	\instrument, \steelString,
@@ -23,6 +24,10 @@
 // 	\out, ~globalRouting[\chuggs][\busNum]
 // ).play;
 
+)
+
+(
+~globalRouting[\chuggs][\gain].set(\gains, 0.4);
 )
 
 (

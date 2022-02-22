@@ -13,8 +13,8 @@ Require("../pat-utils.scd");
 ~chuggs = Pbind(
     \instrument, \steelString,
     \group, ~globalRouting[\chuggs][\strip],
-    \dur, 0.35,
-    \amp, 0.2,
+    \dur, 0.3,
+    \amp, 0.12,
     \stroke, Pgate(Pseq([0, 1], inf), inf, \strokeGate),
     \out, ~globalRouting[\chuggs][\busNum]
     ).asStream;
@@ -35,20 +35,21 @@ Require("../pat-utils.scd");
 ~delta = 0;
 
 ~hiThrobHandler = { | msg, time |
-    var strokeGate, pulse;
+    var strokeGate, pulse, release;
      // postln(~delta);
 
     ~delta = time - ~prevTime;
     ~prevTime = time;
 
     // 0.1392378519995
-
+    // todo: adjust to mean values instead of hardcoding
     if (~delta > 0.1392378519995, { strokeGate = false; }, { strokeGate = true; });
+    if (~delta > 0.1992378519995, { release = 1 }, { release = 0.01; });
 
     // postln(strokeGate);
      // ~picking.next((strokeGate: strokeGate)).play;
 
     pulse = ~pulse4of4.next();
 	if (pulse, { ~cymbals.next(Event.new).play; });
-    ~chuggs.next((strokeGate: strokeGate)).play;
+    ~chuggs.next((strokeGate: strokeGate, release: release)).play;
 }

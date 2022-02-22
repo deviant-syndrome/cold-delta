@@ -4,7 +4,7 @@ var mu, t, e, s, k, f1, l, c, a, beta, beta2, density;
 
 var decaytimefunc;
 
-a = 0.02;
+a = 0.021;
 s = pi * a * a;
 
 // radius of gyration
@@ -66,6 +66,7 @@ SynthDef(\steelString, { |
 	                       out = 0,
 	                       gate = 1,
 						   amp = 1,
+						   release = 1
 						   stroke = 0 |
 
 var nonHarm;
@@ -73,9 +74,9 @@ var filterMovement;
 var filterDown;
 var filterUp;
 var res;
-var env = EnvGen.ar(Env.perc(0.01, 0.3), gate, amp, doneAction: 2);
+var env = EnvGen.ar(Env.adsr(0.01, 0.3, 0.2, release), gate, amp, doneAction: Done.freeSelfToHead);
 	var sound = Mix.fill( modes, { arg i;
-	XLine.ar(1.0, modeamps.at(i), 2.2 * (6  - i)) * SinOsc.ar(modefreqs.at(i), 0, 1 / modes)
+	XLine.ar(1.0, modeamps.at(i), 2.2 * (6  - i)) * FSinOsc.ar(modefreqs.at(i), 0, 1 / modes)
 	});
 // todo:
 // add release handling for damping effect
@@ -86,11 +87,11 @@ var env = EnvGen.ar(Env.perc(0.01, 0.3), gate, amp, doneAction: 2);
 // for longer strokes the high-freq energy should dissipate slower
 // FIlter Q: find a sweet spot + one ringing extremity + one dead extremity
 // When playing fast palm-mutes - less Q, less hi-freqs
-// a little timing fluctuation? 
+// a little timing fluctuation?
 nonHarm = FreqShift.ar(sound, TRand.ar(2000, 2015, gate)) * 0.005;
 filterDown = XLine.ar(1754, 100 + TRand.ar(0, 200, gate), 0.09 + TRand.ar(0, 0.03, gate));
-filterUp = XLine.ar(100 + TRand.ar(0, 200, gate), 2454, 0.09 + TRand.ar(0, 0.03, gate));
+filterUp = XLine.ar(100 + TRand.ar(0, 200, gate), 1754, 0.09 + TRand.ar(0, 0.03, gate));
 filterMovement = Select.ar(stroke, [filterDown, filterUp]);
 res = DynKlank.ar(`[[51, 85, 365, 500], nil, [0, 0.4, 0.0, 0.15]], (sound + nonHarm)) * 0.003;
-Out.ar(out, HPF.ar(RLPF.ar((res + sound + nonHarm) * env, filterMovement, TWChoose.ar(gate, [DC.ar(2.7), DC.ar(4.8)], [0.2, 0.8]) ), 60, 3) ! 2);
+Out.ar(out, HPF.ar(RLPF.ar((res + sound + nonHarm) * env, filterMovement, TWChoose.ar(gate, [DC.ar(2.7), DC.ar(7.8)], [0.2, 0.8]) ), 60, 3));
 }).add;

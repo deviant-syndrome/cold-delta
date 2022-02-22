@@ -5,16 +5,14 @@
 // init channel strips +
 // init routing +
 // init sync messages / event streams +
-// boot server
+// boot server?
 Require("conventions.scd");
 Require("mixer/channel-strip.scd");
-
-~initChannelStrip.value();
-
 Require("mixer/routing.scd");
 Require("instruments/e-drums.scd");
 Require("events/osc-triggers.scd");
 Require("media.scd");
 Require("instruments/throb-playback.scd");
 Require("instruments/throb-listener.scd");
+Require("instruments/modeled/string-test.scd");
 //Require("gui.scd");

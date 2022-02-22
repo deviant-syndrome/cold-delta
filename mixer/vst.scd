@@ -1,3 +1,5 @@
+
+/*
 ~guitarAmpRig = {
 
 }
@@ -69,3 +71,4 @@
 	// l.action = { c.bounds = Rect( l.value * 150 + 20, 35, 100, 100 ) };
 	// w.front;
 )
+*/

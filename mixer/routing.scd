@@ -2,10 +2,12 @@ var routing, busses, mixer, masterStrip;
 
 routing = Dictionary.newFrom([
 	\throbe, Dictionary(),
-	\cynbals, Dictionary()
+	\cymbals, Dictionary(),
+	\chuggs, Dictionary()
 ]);
 
 busses = [];
+
 
 routing.keys.do { arg item, i;
   	var bus = Bus.audio(s, 2);
@@ -16,6 +18,13 @@ routing.keys.do { arg item, i;
 	routing[item].put(\busNum, bus.index);
 	routing[item].put(\jack, { arg v; Synth.head(strip, v, [\out, bus.index])});
 	routing[item].put(\send, { arg v; Synth.before(gain, v, [\in, bus.index])});
+	routing[item].put(\strip, strip);
+	routing[item].put(\vstInsert, {
+		arg vstFileName, showGui = false;
+		var vst = VSTPluginController(Synth.head(strip, \insert, [\bus, bus.index]));
+		vst.open(vstFileName, verbose: true);
+		if (showGui, { vst.gui; });
+	});
 
 	busses = busses.add(bus.index);
 };

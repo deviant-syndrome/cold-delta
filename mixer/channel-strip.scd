@@ -1,5 +1,3 @@
-~initChannelStrip = {
-
 SynthDef(\channelGain, { | gains = 0.5, out = 0 |
 	var gained = In.ar(out, 2) * gains;
 	ReplaceOut.ar(out, gained)
@@ -8,6 +6,10 @@ SynthDef(\channelGain, { | gains = 0.5, out = 0 |
 SynthDef(\masterLimiter, { | out = 0 |
 	var limited = Limiter.ar(In.ar(out, 2), 0.5);
 	ReplaceOut.ar(out, limited);
+}).add;
+
+SynthDef(\insert, { arg bus;
+	ReplaceOut.ar(bus, VSTPlugin.ar(In.ar(bus, 2), 2));
 }).add;
 
 // design:
@@ -32,5 +34,3 @@ SynthDef(\channelEQ, { | out = 0, lshelf = 0, mids = 0, hshelf = 0 |
 	var lowShelved = BPeakEQ.ar(In.ar(out, 2), 200, lshelf);
 
 }).add;
-
-};

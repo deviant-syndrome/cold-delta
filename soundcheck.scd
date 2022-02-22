@@ -3,8 +3,12 @@
 
 // ~globalRouting[\throbe][\jack].value(\throbBlast);
 // ~globalRouting[\throbe][\send].value(\throbListenHigh);
+// ~globalRouting[\chuggs][\gain].set(\gains, 0.3);
+
 ~globalRouting[\chuggs][\vstInsert].value("/Library/Audio/Plug-Ins/VST3/NadIR.vst3", true);
 ~globalRouting[\chuggs][\vstInsert].value("/Library/Audio/Plug-Ins/VST3/Emissary.vst3");
+
+// ~globalRouting[\throbe][\gain].set(\gains, 0.0);
 
 ~globalRouting[\throbe][\jack].value(\throbBlast);
 ~globalRouting[\throbe][\send].value(\throbListenHigh);
@@ -39,5 +43,5 @@
 )
 
 (
-	~globalRouting[\chuggs][\gain].set(\gains, 0.3);
+	~globalRouting[\chuggs][\gain].set(\gains, 0.35);
 )

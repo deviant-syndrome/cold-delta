@@ -14,7 +14,7 @@ currentEnvironment.use({
 		var chuggs = Pbind(
 	    	\instrument, \steelString,
 	    	\group, ~globalRouting[\chuggs][\strip],
-			\dur, 0.5,
+			\dur, 0.35,
 	    	\amp, 0.12,
 	    	\stroke, Pgate(Pseq([0, 1], inf), inf, \strokeGate),
 	    	\out, ~globalRouting[\chuggs][\busNum]

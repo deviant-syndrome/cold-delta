@@ -6,6 +6,10 @@
 // init routing +
 // init sync messages / event streams +
 // boot server?
+
+Environment.stack = [];
+
+Require("read-config.scd");
 Require("conventions.scd");
 Require("mixer/channel-strip.scd");
 Require("mixer/routing.scd");
@@ -15,4 +19,9 @@ Require("media.scd");
 Require("instruments/throb-playback.scd");
 Require("instruments/throb-listener.scd");
 Require("instruments/modeled/string-test.scd");
-//Require("gui.scd");
+Require("events/become.scd");
+Require("behaviours/play-basic-riff.scd");
+Require("commutation.scd");
+
+topEnvironment.putAll(currentEnvironment.deepCopy);
+Environment.make({}).push;

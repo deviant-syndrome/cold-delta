@@ -3,7 +3,8 @@ var routing, busses, mixer, masterStrip;
 routing = Dictionary.newFrom([
 	\throbe, Dictionary(),
 	\cymbals, Dictionary(),
-	\chuggs, Dictionary()
+	\chuggs, Dictionary(),
+	\throbLookAhead, Dictionary()
 ]);
 
 busses = [];
@@ -17,7 +18,8 @@ routing.keys.do { arg item, i;
 	routing[item].put(\gain, gain);
 	routing[item].put(\busNum, bus.index);
 	routing[item].put(\jack, { arg v; Synth.head(strip, v, [\out, bus.index])});
-	routing[item].put(\send, { arg v; Synth.before(gain, v, [\in, bus.index])});
+	// todo: try using a Monitor here
+	routing[item].put(\send, { arg v, params; Synth.before(gain, v, [\in, bus.index] ++ params)});
 	routing[item].put(\strip, strip);
 	routing[item].put(\vstInsert, {
 		arg vstFileName, showGui = false;

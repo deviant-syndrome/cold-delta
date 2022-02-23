@@ -1,0 +1,6 @@
+vst:
+      ampsim.path: "/Library/Audio/Plug-Ins/VST3/Emissary.vst3"
+      cabsim.path: "/Library/Audio/Plug-Ins/VST3/NadIR.vst3"
+
+media:
+      drums.path: "media/drums.wav"

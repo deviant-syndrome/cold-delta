@@ -1,27 +1,12 @@
 Require("stopwatch.scd");
 Require("../riffs/basic.scd");
 
-// todo: maybe gather all the pulses into one list/dictionary
-~pulse4of4 = Routine.new({ true.yield; false.yield; false.yield; false.yieldAndReset; });
+// todo: use dependency inversion here
+//       instead of adding a global variable
+//       pass the handlerMananger as context
+//       and register function in it
 
+// also, probably should remove this class altogheher
 ~hiThrobHandler = { | msg, time |
-    var strokeGate, pulse, release;
-
-    currentEnvironment.use({
-        ~stopWatchContext.valueEnvir(exec: { | tick, delta |
-            tick.value(time);
-            // todo: add mean values from window here instead of hardcoding
-            if (delta > 0.1392378519995, { strokeGate = false; }, { strokeGate = true; });
-            if (delta > 0.192378519995, { release = 1 }, { release = 0.01; });
-        });
-    });
-
-    currentEnvironment.use({
-        ~riffsContext.valueEnvir(exec: { | basicRiffs |
-            pulse = ~pulse4of4.next();
-            if (pulse, { basicRiffs[\cymbals].next(Event.new).play; });
-            basicRiffs[\chuggs].next((strokeGate: strokeGate, release: release)).play;
-        });
-    });
-
+    ~behaviour[\onTick].value(time);
 }

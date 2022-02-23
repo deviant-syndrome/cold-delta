@@ -1,4 +1,4 @@
-~getPattern = { | steps, pulses |
+~euclidianPattern = { | steps, pulses |
 	var pattern = [];
 	var counts = [];
 	var remainders = [];
@@ -33,8 +33,3 @@
 
 	pattern
 };
-
-
-
-
-

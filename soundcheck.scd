@@ -1,8 +1,11 @@
 (
-Require("bootstrap.scd");
+//Require("bootstrap.scd");
 
-topEnvironment[\become].value(topEnvironment[\playBasicRiff]);
-
+//topEnvironment[\become].value(topEnvironment[\playBasicRiff]);
+~player = Pbind(
+	\instrument, \steelString,
+	\dur, 2
+	).play;
 )
 
 (

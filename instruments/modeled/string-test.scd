@@ -1,4 +1,4 @@
-var modes, modefreqs, modeamps;
+(var modes, modefreqs, modeamps;
 
 var mu, t, e, s, k, f1, l, c, a, beta, beta2, density;
 
@@ -19,7 +19,13 @@ mu = density*s;
 t = 100000;
 c = (t / mu).sqrt;	// speed of sound on wave
 
-l = 0.96;
+// l = 0.942;  C#
+// l = 0.909;  D
+// l = 0.856;  D#
+// l = 0.813;  E
+// l = 0.763;  F
+ l = 0.763;
+
 
 f1= c / (2 * l);
 
@@ -35,7 +41,13 @@ modefreqs = Array.fill(modes, { arg i;
 
   fr = n * f1 * (1 + beta + beta2 + (n * n * pi * pi * beta2 * 0.125));
   if ( fr>21000, { fr=21000 } ); // no aliasing
-if ( fr<100, { fr=100 } ); // inharmonic component
+if ( fr<100, { fr=129 } ); // inharmonic component
+// 100 - C#
+// 110 - D
+// 116 - D#
+// 123 / 125- E
+// 129 - F
+
 fr; //* (0.999 + 0.002.rand);
 
 });
@@ -95,3 +107,4 @@ filterMovement = Select.ar(stroke, [filterDown, filterUp]);
 res = DynKlank.ar(`[[51, 85, 365, 500], nil, [0, 0.4, 0.0, 0.15]], (sound + nonHarm)) * 0.003;
 Out.ar(out, HPF.ar(RLPF.ar((res + sound + nonHarm) * env, filterMovement, TWChoose.ar(gate, [DC.ar(2.7), DC.ar(7.8)], [0.2, 0.8]) ), 60, 3));
 }).add;
+)

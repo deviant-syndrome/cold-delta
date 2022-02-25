@@ -2,6 +2,7 @@
 	              ttl,
                   gate,
 	              timeScale = 1,
+				  freqScale = 1,
 	              freqModFactory,
 	              ampModFactory,
 	              loopNode = nil,
@@ -29,8 +30,8 @@
 			releaseNode: releaseNode.value(partialTimePoints.size),
 			loopNode: loopNode);
 
-		var ampEnvSig = EnvGen.ar(ampEnvArray, timeScale: timeScale, gate: gate);
-		var freqEnvSig = EnvGen.ar(freqEnvArray, timeScale: timeScale, gate: gate);
+		var ampEnvSig = EnvGen.ar(ampEnvArray, timeScale: timeScale, gate: gate, doneAction: Done.freeSelfToHead);
+		var freqEnvSig = EnvGen.ar(freqEnvArray, timeScale: timeScale, gate: gate) * freqScale * 0.5;
 
 		var freqModAr = SynthDef.wrap(
 			freqModFactory, prependArgs: [i]
@@ -51,7 +52,6 @@
 		son = BPF.ar(son,430,1)+son;
 		son = BPF.ar(son,490,1)+son;
 		son = LPF.ar(son,6000);
-
 		son * ampEnvSig;
 
 		// chain = FFT(LocalBuf(2048), son * ampEnvSig);
@@ -60,5 +60,5 @@
 	});
 };
 
-~loopedBowedGen = { | data, ttl, gate |
-	~bowedGen.value(data, ttl, gate, 1, { | i | DC.ar(1) }, { | i | DC.ar(1)}, 0, ~loopReleaseNode ); } ;
+~loopedBowedGen = { | data, ttl, gate, timeScale, freqScale = 1 |
+	~bowedGen.value(data, ttl, gate, timeScale, freqScale, { | i | DC.ar(1) }, { | i | DC.ar(1)}, 0, ~loopReleaseNode ); } ;

@@ -16,8 +16,8 @@ Require("spear-rand-partials.scd");
   ~spearBuilder.value(fileName,
 	name: name,
 	mixin: { DC.ar(0); },
-	partialPicker: ~allPartialsPicker,
-	partialGen: ~simplePartialGen,
+	partialPicker: ~randomPartialPicker.value(6),
+	partialGen: ~movingPartialGen,
  	envFactory: ~sustainedEnvelope
   );
 };
@@ -28,7 +28,8 @@ Require("spear-rand-partials.scd");
 	mixin: { DC.ar(0); },
 	partialPicker: ~randomPartialPicker.value(numPartials),
 	partialGen: ~loopedBowedGen,
- 	envFactory: ~sustainedEnvelope
+ 	envFactory: ~sustainedEnvelope,
+	release: 5
   );
 };
 

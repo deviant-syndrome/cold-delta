@@ -1,30 +1,7 @@
-(
-Require("bootstrap.scd");
-
-topEnvironment[\become].value(topEnvironment[\playBasicRiff]);
-
-)
-
-(
-~globalRouting[\chuggs][\gain].set(\gains, 0.4);
-)
-
-
-(
-	~player.stop;
-	s.freeAll;
-)
-
-(
-	s.makeGui();
-)
-
-
-(
-SynthDef(\bells, { |out=0, freq=440, amp=0.5, gate=1, c3=17, pan=0, bufnum = 0|
+SynthDef(\bells, { |out=0, freq=440, amp=0.5, gate=1, c3=17, sustain = 0.3, pan=0 |
 	var snd, snd2;
 	var env = Env.perc(0.01, 0.8);
-		var env2 = Env.adsr(0.01, 0.5, 0.3, 1.4);
+		var env2 = Env.adsr(0.01, 0.5, sustain, 1.4);
 
 
 	var body = RLPF.ar(Saw.ar(freq, EnvGen.ar(env, gate, doneAction: 2)), XLine.ar(1800, 160, 0.5)) ! 2;
@@ -43,22 +20,6 @@ SynthDef(\bells, { |out=0, freq=440, amp=0.5, gate=1, c3=17, pan=0, bufnum = 0|
 		snd = snd*0.1 + BBandPass.ar(snd, 751,0.075) + BBandPass.ar(snd, 1460,0.075) + BBandPass.ar(snd, 2841,0.075);
 
 
-	Out.ar(0, snd * 0.1);
+	Out.ar(out, snd * 0.1);
 
 }).add;
-)
-
-(
-	var synth = SynthDescLib.global.at(\bowedHell);
-
-	var controls = synth.controls;
-	controls
-)
-
-(
-	SynthDef(\test, { | out = 0 |
-		var impulse = Impulse.kr(1);
-		var sound = SinOsc.ar(440, 0, EnvGen.ar(Env.perc(0.2, 1), impulse));
-		Out.ar(out, sound ! 2);
-	}).add;
-)

@@ -1,12 +1,12 @@
-var pat8ths = { | pattern |
+var pat8ths = { | pattern, length = 0.25 |
 	Routine.new({
 		pattern.do({ arg v;
-			if (v == 1, { (1 / 4).yield; }, { Rest(1 / 4).yield; });
+			if (v == 1, { (length).yield; }, { Rest(length).yield; });
 		})
 	});
 };
 
-var loopForever = { | routine, subRepeats = 4 |
+var loopForever = { | routine, subRepeats = 4, length = 0.25 |
 	Routine.new({
 		loop({
 			subRepeats.do({ |i|
@@ -21,8 +21,11 @@ var e = currentEnvironment;
 Require("e-pattern.scd");
 
 e[\patternUtilsContext] = { |
+							  globalRouting,
 							  euclidianPattern,
 	                   		  exec
-					 	    | exec.value(pat8ths,
+					 	    | exec.value(
+										 pat8ths,
 										 loopForever,
-										 euclidianPattern); };
+										 euclidianPattern,
+										 globalRouting); };

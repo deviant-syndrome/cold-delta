@@ -8,6 +8,7 @@
 
 	if ( cacheExists,
 		{
+			postln("Read from cache");
 			initialData = Object.readArchive(cachedPath); },
 		{
 			initialData = CSVFileReader.readInterpret(csvPath);

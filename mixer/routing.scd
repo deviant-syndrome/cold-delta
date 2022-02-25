@@ -4,6 +4,8 @@ routing = Dictionary.newFrom([
 	\throbe, Dictionary(),
 	\cymbals, Dictionary(),
 	\chuggs, Dictionary(),
+	\partials, Dictionary(),
+	\synth1, Dictionary(),
 	\throbLookAhead, Dictionary()
 ]);
 

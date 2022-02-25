@@ -10,6 +10,7 @@
 Environment.stack = [];
 
 Require("read-config.scd");
+Require("stopwatch.scd");
 Require("conventions.scd");
 Require("mixer/channel-strip.scd");
 Require("mixer/routing.scd");
@@ -22,6 +23,8 @@ Require("instruments/throb-playback.scd");
 Require("instruments/throb-listener.scd");
 Require("instruments/modeled/string-test.scd");
 Require("events/become.scd");
+// todo: require a riff dictionary instrad
+Require("riffs/intro.scd");
 
 Require("instruments/spectral/builders.scd");
 ~textureSpearBuilder.value("partials/low-res/guitar1.csv", \bowedHell);

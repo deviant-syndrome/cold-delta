@@ -1,6 +1,3 @@
-Require("stopwatch.scd");
-Require("../riffs/basic.scd");
-
 // todo: use dependency inversion here
 //       instead of adding a global variable
 //       pass the handlerMananger as context

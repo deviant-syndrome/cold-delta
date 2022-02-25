@@ -16,7 +16,18 @@ currentEnvironment.use({
 			\group, globalRouting[\synth1][\strip],
 			\scale, Scale.minor,
 			\octave, 5,
-			\degree, Pseq([0, 4, 4, 3, Rest(), 2, 1, Rest(), 6, 7], inf),
+			\degree,
+			Pdfsm(
+				   [
+					   Pseq( [\reprise, \reprise, \reprise, \coda], inf ),
+					   (
+						   \reprise : [0, Pseq([0, 4, 4, 3, Rest(), 2, 1, Rest(), 6, 7], 1)],
+						   \coda : [0, Pseq([-4, 4, 4, 3, Rest(), 2, 1, Rest(), 6, 7], 1)]
+					   )
+				   ],
+				   0,
+				   inf
+			   ).asStream,
 			\sustain, Pseq([0.3, 0.6], inf),
 			\out, globalRouting[\synth1][\busNum]
 		).asStream;
@@ -40,7 +51,7 @@ currentEnvironment.use({
 	    // 	\out, ~globalRouting[\chuggs][\busNum]
 	    // ).asStream;
 
-		var basicRiffs =  Dictionary.newFrom([
+		var introRiffs =  Dictionary.newFrom([
 			\cymbals, cymbals,
 			// \chuggs, chuggs,
 			\bowed, bowed,
@@ -49,6 +60,6 @@ currentEnvironment.use({
 
 		currentEnvironment[\riffsContext] = { |
 			                   					exec
-							 				  | exec.value(basicRiffs); };
+							 				  | exec.value(introRiffs); };
 	});
 });

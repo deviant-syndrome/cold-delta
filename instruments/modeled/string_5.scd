@@ -1,10 +1,12 @@
+// should be F# for the standard tuning
+(
 var modes, modefreqs, modeamps;
 
 var mu, t, e, s, k, f1, l, c, a, beta, beta2, density;
 
 var decaytimefunc;
 
-a = 0.021;
+a = 0.0179;
 s = pi * a * a;
 
 // radius of gyration
@@ -24,7 +26,7 @@ c = (t / mu).sqrt;	// speed of sound on wave
 // l = 0.856;  D#
 // l = 0.813;  E
 // l = 0.763;  F
- l = 0.763;
+ l = 0.837;
 
 
 f1= c / (2 * l);
@@ -41,12 +43,7 @@ modefreqs = Array.fill(modes, { arg i;
 
   fr = n * f1 * (1 + beta + beta2 + (n * n * pi * pi * beta2 * 0.125));
   if ( fr>21000, { fr=21000 } ); // no aliasing
-if ( fr<100, { fr=129 } ); // inharmonic component
-// 100 - C#
-// 110 - D
-// 116 - D#
-// 123 / 125- E
-// 129 - F
+if ( fr<100, { fr=133.5 } );
 
 fr; //* (0.999 + 0.002.rand);
 
@@ -74,7 +71,7 @@ decaytimefunc = { arg freq;
 
 modeamps = Array.fill(modes, { arg i; decaytimefunc.value(modefreqs.at(i)) } );
 
-SynthDef(\steelString, { |
+SynthDef(\steelString5, { |
 	                       out = 0,
 	                       gate = 1,
 						   amp = 1,
@@ -86,7 +83,7 @@ var filterMovement;
 var filterDown;
 var filterUp;
 var res;
-var env = EnvGen.ar(Env.adsr(0.01, 0.3, 0.2, release), gate, amp, doneAction: Done.freeSelfToHead);
+var env = EnvGen.ar(Env.adsr(0.01, 0.3, 0.5, release), gate, amp, doneAction: Done.freeSelfToHead);
 	var sound = Mix.fill( modes, { arg i;
 	XLine.ar(1.0, modeamps.at(i), 2.2 * (6  - i)) * FSinOsc.ar(modefreqs.at(i), 0, 1 / modes)
 	});
@@ -101,9 +98,10 @@ var env = EnvGen.ar(Env.adsr(0.01, 0.3, 0.2, release), gate, amp, doneAction: Do
 // When playing fast palm-mutes - less Q, less hi-freqs
 // a little timing fluctuation?
 nonHarm = FreqShift.ar(sound, TRand.ar(2000, 2015, gate)) * 0.005;
-filterDown = XLine.ar(1754, 100 + TRand.ar(0, 200, gate), 0.09 + TRand.ar(0, 0.03, gate));
+filterDown = XLine.ar(1754, 100 + TRand.ar(0, 200, gate), 1.09 + TRand.ar(0, 0.03, gate));
 filterUp = XLine.ar(100 + TRand.ar(0, 200, gate), 1754, 0.09 + TRand.ar(0, 0.03, gate));
 filterMovement = Select.ar(stroke, [filterDown, filterUp]);
 res = DynKlank.ar(`[[51, 85, 365, 500], nil, [0, 0.4, 0.0, 0.15]], (sound + nonHarm)) * 0.003;
 Out.ar(out, HPF.ar(RLPF.ar((res + sound + nonHarm) * env, filterMovement, TWChoose.ar(gate, [DC.ar(2.7), DC.ar(7.8)], [0.2, 0.8]) ), 60, 3));
 }).add;
+)

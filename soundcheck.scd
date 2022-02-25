@@ -1,11 +1,12 @@
 (
-//Require("bootstrap.scd");
+Require("bootstrap.scd");
 
-//topEnvironment[\become].value(topEnvironment[\playBasicRiff]);
-~player = Pbind(
-	\instrument, \steelString,
-	\dur, 2
-	).play;
+topEnvironment[\become].value(topEnvironment[\playBasicRiff]);
+
+// ~player = Pbind(
+// 	\instrument, Pseq([\steelString6, \steelString5], inf),
+// 	\dur, 2
+// 	).play;
 )
 
 (
@@ -22,6 +23,24 @@
 	s.makeGui();
 )
 
+(
+    p = Pdfsm(
+		   [
+			   Pseq( [\reprise, \reprise, \reprise, \coda], inf ),
+			   (
+				   \reprise : [0, Pseq([0, 4, 4, 3, Rest(), 2, 1, Rest(), 6, 7], 1)],
+				   \coda : [0, Pseq([-4, 4, 4, 3, Rest(), 2, 1, Rest(), 6, 7], 1)]
+			   )
+		   ],
+		   0,
+		   inf
+	   ).asStream;
+)
+
+(
+    p.next.postln;
+	// postln("-----")
+)
 
 (
 SynthDef(\bells, { |out=0, freq=440, amp=0.5, gate=1, c3=17, pan=0, bufnum = 0|

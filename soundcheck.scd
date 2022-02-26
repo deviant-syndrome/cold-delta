@@ -1,12 +1,16 @@
 (
 Require("bootstrap.scd");
-
-topEnvironment[\become].value(topEnvironment[\playBasicRiff]);
+//
+topEnvironment[\become].value( Dictionary.newFrom(
+	[\onTick, {}]
+)
+);
 
 // ~player = Pbind(
 // 	\instrument, Pseq([\steelString6, \steelString5], inf),
 // 	\dur, 2
 // 	).play;
+
 )
 
 (

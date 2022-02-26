@@ -10,7 +10,7 @@
 Environment.stack = [];
 
 Require("read-config.scd");
-Require("stopwatch.scd");
+Require("events/stopwatch.scd");
 Require("conventions.scd");
 Require("mixer/channel-strip.scd");
 Require("mixer/routing.scd");
@@ -22,16 +22,26 @@ Require("media.scd");
 Require("instruments/throb-playback.scd");
 Require("instruments/throb-listener.scd");
 Require("instruments/modeled/string-test.scd");
+Require("instruments/modeled/string_5.scd");
+Require("instruments/modeled/string_6.scd");
 Require("events/become.scd");
 // todo: require a riff dictionary instrad
 Require("riffs/intro.scd");
 
 Require("instruments/spectral/builders.scd");
-~textureSpearBuilder.value("partials/low-res/guitar1.csv", \bowedHell);
+// ~textureSpearBuilder.value("partials/low-res/guitar1.csv", \bowedHell);
 
 Require("behaviours/play-basic-riff.scd");
 Require("commutation.scd");
 
+~player = Pbind(
+	\instrument, \steelString6,
+	\dur, 2,
+	\fret, Pseq([3, 0, 2, 0], inf),
+	\group, ~globalRouting[\chuggs][\strip],
+	\out, ~globalRouting[\chuggs][\busNum]
+);
 
+~player.play;
 topEnvironment.putAll(currentEnvironment.deepCopy);
 Environment.make({}).push;

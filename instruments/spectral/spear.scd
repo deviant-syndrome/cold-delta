@@ -15,7 +15,7 @@ Require("file-load.scd");
 
     var initialData = ~loadPartials.value(fileName);
 	var data = partialPicker.value(initialData);
-	postln("Version 5");
+	postln("Version 6");
 	SynthDef(name, { | gate = 1, amp = 0.15 |
 		var env = EnvGen.ar(envFactory.value(attack, decay, sustain, release), gate, doneAction: 2);
 

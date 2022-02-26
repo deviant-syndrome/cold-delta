@@ -3,6 +3,7 @@ Require("hithrob-handler.scd");
 
 OSCdef.freeAll;
 
+// todo: cleanup
 qq = {
 	topEnvironment.use({
 		~riffsContext.valueEnvir(exec: { | basicRiffs |
@@ -19,7 +20,7 @@ currentEnvironment.use({
 		~context.valueEnvir(exec: {
 			| const_HI_THROB |
 				OSCdef.newMatching(\basic, ~hiThrobHandler, '/tr', s.addr, nil, [nil, nil, const_HI_THROB]);
-				OSCdef.newMatching(\drumTrack, qq, '/tr', s.addr, nil, [nil, nil, 777.0]);
+				OSCdef.newMatching(\drumTrack, {}, '/tr', s.addr, nil, [nil, nil, 777.0]);
 		});
 	}
 );

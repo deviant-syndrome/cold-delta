@@ -4,3 +4,5 @@
 	    ~behaviour = beh;
 	}.push;
 };
+
+~unbecome = { Environment.pop; };

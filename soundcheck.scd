@@ -1,10 +1,8 @@
 (
 Require("bootstrap.scd");
 //
-topEnvironment[\become].value( Dictionary.newFrom(
-	[\onTick, {}]
-)
-);
+// postln(topEnvironment);
+topEnvironment[\become].value(topEnvironment[\playMovement1]);
 
 // ~player = Pbind(
 // 	\instrument, Pseq([\steelString6, \steelString5], inf),
@@ -17,7 +15,6 @@ topEnvironment[\become].value( Dictionary.newFrom(
 ~globalRouting[\chuggs][\gain].set(\gains, 0.4);
 )
 
-
 (
 	~player.stop;
 	s.freeAll;
@@ -27,6 +24,13 @@ topEnvironment[\become].value( Dictionary.newFrom(
 	s.makeGui();
 )
 
+(
+SynthDef("help-Dust", { arg out=0;
+    Out.ar(out,
+        Dust.ar(0.4, 0.2)
+    )
+}).play;
+)
 (
     p = Pdfsm(
 		   [
@@ -87,4 +91,11 @@ SynthDef(\bells, { |out=0, freq=440, amp=0.5, gate=1, c3=17, pan=0, bufnum = 0|
 		var sound = SinOsc.ar(440, 0, EnvGen.ar(Env.perc(0.2, 1), impulse));
 		Out.ar(out, sound ! 2);
 	}).add;
+)
+
+(
+var a, b;
+a = Pn(2, Pwhite(-1.0, 1.0));
+x = a.asStream;
+8.do { x.next.postln };
 )

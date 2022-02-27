@@ -17,7 +17,7 @@ var playBasicRiff = { | time |
 	topEnvironment.use({
 		~riffsContext.valueEnvir(exec: { | basicRiffs |
 			pulse = pulse4of4.next();
-		
+
 			if (pulse, { basicRiffs[\cymbals].next(Event.new).play; });
 			if (pulse, { basicRiffs[\bowed].next(Event.new).play; });
 			//basicRiffs[\chuggs].next((strokeGate: strokeGate, release: release)).play;
@@ -27,5 +27,6 @@ var playBasicRiff = { | time |
 };
 
 ~playBasicRiff = Dictionary.newFrom(
-	[\onTick, playBasicRiff]
+	[\onSet, playBasicRiff],
+	[\onBeat, {}], // todo: this should play synth part
 );

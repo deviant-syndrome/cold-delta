@@ -23,7 +23,6 @@ topEnvironment.use({
 });
 
 
-
 SynthDef(\steelString6, { |
 	                       out = 0,
 	                       gate = 1,
@@ -31,6 +30,7 @@ SynthDef(\steelString6, { |
 						   release = 1,
 						   fret = 0,
 						   stroke = 0,
+                           choke = 0,
 						   pm = 0 |
 
 	var nonHarm;
@@ -43,16 +43,21 @@ SynthDef(\steelString6, { |
 	// palm mute
 	// lower sustain
 	// faster filter close
+	var decay = Select.kr(pm, [DC.kr(1.3), DC.kr(0.3)]);
+	var sustain = Select.kr(pm, [DC.kr(0.5), DC.kr(0.3)]);
+	var closingSpeed = Select.kr(pm, [DC.kr(4.09), DC.kr(0.09)]);
 
-	var env = EnvGen.ar(Env.adsr(0.01, 1.3, 0.5, release), gate, amp, doneAction: Done.freeSelf);
+	var env = EnvGen.ar(Env.adsr(0.01, decay, sustain, release), gate, amp,
+		doneAction: Select.kr(choke, [Done.freeSelf, Done.freeSelfToHead]));
+
   	var sound = Mix.fill( modes, { arg i;
   		XLine.ar(1.0,
 			Select.kr(fret, modeamps)[i], 2.2 * (6  - i)) * FSinOsc.ar(Select.kr(fret, modefreqs)[i], 0, 1 / modes)
   	});
-
+    Poll.kr(Impulse.kr(2), release);
 	nonHarm = FreqShift.ar(sound, TRand.ar(2000, 2015, gate)) * 0.005;
-	filterDown = XLine.ar(1754, 100 + TRand.ar(0, 200, gate), 4.09 + TRand.ar(0, 0.03, gate));
-	filterUp = XLine.ar(100 + TRand.ar(0, 200, gate), 1754, 0.09 + TRand.ar(0, 0.03, gate));
+	filterDown = XLine.ar(1754, 100 + TRand.ar(0, 200, gate), closingSpeed + TRand.ar(0, 0.03, gate));
+	filterUp = XLine.ar(100 + TRand.ar(0, 200, gate), 1754, closingSpeed + TRand.ar(0, 0.03, gate));
 	filterMovement = Select.ar(stroke, [filterDown, filterUp]);
 	res = DynKlank.ar(`[[51, 85, 365, 500], nil, [0, 0.4, 0.0, 0.15]], (sound + nonHarm)) * 0.003;
 	Out.ar(out, HPF.ar(RLPF.ar((res + sound + nonHarm) * env, filterMovement,

@@ -21,6 +21,7 @@ Require("events/osc-triggers.scd");
 Require("media.scd");
 Require("instruments/throb-playback.scd");
 Require("instruments/throb-listener.scd");
+Require("instruments/modeled/calculation.scd");
 Require("instruments/modeled/string-test.scd");
 Require("instruments/modeled/string_5.scd");
 Require("instruments/modeled/string_6.scd");
@@ -35,9 +36,10 @@ Require("behaviours/play-basic-riff.scd");
 Require("commutation.scd");
 
 ~player = Pbind(
-	\instrument, \steelString6,
-	\dur, 2,
+	\instrument, Pseq([\steelString5, \steelString6], inf),
+	\dur, 0.5,
 	\fret, Pseq([3, 0, 2, 0], inf),
+	\amp, Pseq([1, 0.7], inf),
 	\group, ~globalRouting[\chuggs][\strip],
 	\out, ~globalRouting[\chuggs][\busNum]
 );

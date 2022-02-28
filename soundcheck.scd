@@ -2,9 +2,14 @@
 Require("bootstrap.scd");
 //
 // postln(topEnvironment);
-topEnvironment[\become].value(topEnvironment[\playMovement1]);
 
-// ~player = Pbind(
+topEnvironment[\become].value(topEnvironment[\playMovement1]);
+//
+// topEnvironment[\become].value(Dictionary.newFrom([
+// 		\onSet, {}
+// 	]));
+//
+// // ~player = Pbind(
 // 	\instrument, Pseq([\steelString6, \steelString5], inf),
 // 	\dur, 2
 // 	).play;

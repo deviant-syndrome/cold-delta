@@ -15,8 +15,8 @@ var playMovement1 = { | time |
 	});
 
 	topEnvironment.use({
-		~movement1Context.valueEnvir(exec: { | movement1Riffs |
-			movement1Riffs[\chops].next((strokeGate: strokeGate, release: release)).play;
+		~movement1Context.valueEnvir(exec: { | movement1Riffs, movement1Sync |
+			if (movement1Sync.next(), { movement1Riffs[\chops].next((strokeGate: strokeGate, release: release)).play; });
 		});
 	});
 

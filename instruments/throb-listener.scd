@@ -9,7 +9,7 @@ currentEnvironment.use({
 			var trackb,trackh,trackq,tempo;
 			var source, beep;
 			var bsound,hsound,qsound;
-var slopeanalysis;
+			var slopeanalysis;
 			source = In.ar(in, 1);
 
 			#trackb,trackh,trackq,tempo = DrumTrack.kr(source, 0,
@@ -21,7 +21,6 @@ var slopeanalysis;
 			SendTrig.kr(reset, 0, const_HI_THROB);
 
 			SendTrig.kr(trackb, 0, 777.0);
-			// slopeanalysis = AttackSlope.kr(source,windowsize: 2048, peakpicksize:20,sumthreshold:40);
 			slopeanalysis = Slope.kr(Latch.kr(in: tempo, trig: Impulse.kr(1)));
 
 

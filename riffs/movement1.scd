@@ -4,7 +4,6 @@ var halftime = Routine.new({ true.yield; false.yield; false.yield; false.yieldAn
 var movement1Sync;
 
 var chops = Pbind(
-	// todo: some spectrally morphed-in stuff here
 	\instrument, Pseq([\steelString5, \steelString6, \steelString5, \steelString6, \steelString6, \steelString6, \steelString6], 2),
 	// \dur, Pseq([0.5, 0.5, 0.5, 0.5, 0.2, 0.2, 0.2], inf),
 	\fret, Pn(Pseq([Pseq([3, 0, 2, 0, 1, 4, 1], 3), Pseq([4, 1, 3, 1, 0, 0, 0], 1)], 2), 1, \kek),
@@ -17,7 +16,6 @@ var chops = Pbind(
 );
 
 var muted = Pbind(
-	// todo: some spectrally morphed-in stuff here
 	\instrument, \steelString6,
 	// \dur, Pseq([0.5, 0.5, 0.5, 0.5, 0.2, 0.2, 0.2], inf),
 	\fret, 0,
@@ -33,7 +31,6 @@ var muted = Pbind(
 var both = Pseq([muted, chops], inf).asStream;
 
 var tremolos = Pbind(
-	// todo: some spectrally morphed-in stuff here
 	\instrument, \steelString5,
 	\dur, 0.35,
 	\fret, Pseq([Pn(0, 18), 1], inf),

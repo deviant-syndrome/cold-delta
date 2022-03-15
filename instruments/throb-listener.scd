@@ -10,6 +10,9 @@ currentEnvironment.use({
 			var source, beep;
 			var bsound,hsound,qsound;
 			var slopeanalysis;
+			var beatanalysis;
+			var dynanalysis;
+
 			source = In.ar(in, 1);
 
 			#trackb,trackh,trackq,tempo = DrumTrack.kr(source, 0,
@@ -27,23 +30,10 @@ currentEnvironment.use({
 			SendTrig.kr(InRange.kr(in: slopeanalysis, lo: 400, hi: 1000), 0, 778.0);
 			SendTrig.kr(InRange.kr(in: slopeanalysis, lo: -1000, hi: -200), 0, 779.0);
 
-			Poll.kr(Impulse.kr(2), tempo);
-			Poll.kr(Impulse.kr(2), slopeanalysis);
-
 			bsound= Pan2.ar(LPF.ar(WhiteNoise.ar*(Decay.kr(trackb,0.01)),1000),0.0);
-			//
 			hsound= Pan2.ar(BPF.ar(WhiteNoise.ar*(Decay.kr(trackh,0.01)),3000,0.66),-0.5);
 
-
 			qsound= Pan2.ar(HPF.ar(WhiteNoise.ar*(Decay.kr(trackq,0.01)),5000),0.5);
-
-			// Out.ar(0, (qsound) * 0.2);
-			// beep = SinOsc.ar(1000,0.0, Decay.kr(trackh, 0.01));
-			// Poll.kr(Impulse.kr(2), DrumTrack.kr(source, 0,
-			// 	kicksensitivity: 0.91,
-			// 	snaresensitivity: 1.0));
-			// Out.ar(0, Pan2.ar((0.2 * beep), 0.0));
-
 
 		}).add;
 	});

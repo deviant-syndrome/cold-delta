@@ -43,6 +43,14 @@ var tremolos = Pbind(
 	\out, ~globalRouting[\chuggs][\busNum]
 ).asStream;
 
+var hell = Pbind(
+	\instrument, \hellhell,
+	\dur, Pseq([1 / 2, 1 / 2, 1 / 2, 0.5 / 2], inf),
+	\release, Pseq([0.4 , 0.1, 0.1, 0.2], inf),
+	\p1, Pseq([5, 5, 1, 2], inf),
+	\amp, 0.06
+).asStream;
+
 var movement1Riffs = Dictionary.newFrom([
 	\chops, both,
 	\tremolos, tremolos,

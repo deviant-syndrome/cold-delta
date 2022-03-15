@@ -9,7 +9,6 @@ var playMovement1 = { | time |
 			// todo: add mean values from window here instead of hardcoding
 			if (delta > 0.1392378519995, { strokeGate = false; }, { strokeGate = true; });
 			if (delta > 0.192378519995, { release = 1 }, { release = 0.01; });
-			// postln(release);
 
 		});
 	});

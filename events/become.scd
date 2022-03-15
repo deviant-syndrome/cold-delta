@@ -3,6 +3,9 @@
 	Environment.make {
 	    ~behaviour = beh;
 	}.push;
+	postln(Environment.stack.size)
 };
 
-~unbecome = { Environment.pop; };
+~unbecome = {
+	if (Environment.stack.size > 1, { Environment.pop; })
+};

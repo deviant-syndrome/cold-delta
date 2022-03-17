@@ -30,7 +30,7 @@ var playMovement1 = { | time |
 // 	[\onTurnAround, {}]
 // );
 
-var prob = Pwrand.new([{}, { topEnvironment[\become].value(topEnvironment[\playLeaks]); }], [0.2, 0.8].normalizeSum, inf).asStream;
+var prob = Pwrand.new([{}, { topEnvironment[\become].value(topEnvironment[\playLeaks]); }], [0.5, 0.5].normalizeSum, inf).asStream;
 
 ~playMovement1 = Dictionary.newFrom(
 	[

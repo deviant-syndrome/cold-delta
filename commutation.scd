@@ -24,6 +24,8 @@ currentEnvironment.use({
 
 // ~globalRouting[\throbe][\gain].set(\gains, 0.0); // debug
 
+~globalRouting[\throbe][\send].value(\cymbalTexture, [\out, ~globalRouting[\cymbals][\busNum]]);
+
 ~globalRouting[\throbLookAhead][\jack].value(\throbBlast, [\offsetSeconds, 0]);
 ~globalRouting[\throbLookAhead][\send].value(\throbListenLookAhead);
 ~globalRouting[\throbLookAhead][\gain].set(\gains, 0.0);

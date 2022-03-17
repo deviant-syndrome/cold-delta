@@ -38,7 +38,7 @@ currentEnvironment.use({
 
                 OSCdef.newMatching(\basicOnBeat, behaviourOnBeatHandler, '/tr', s.addr, nil, [nil, nil, const_THROB_BEAT]);
 
-				OSCdef.newMatching(\sparseOnSet, { Synth.new(\kickDistorted); }, '/tr', s.addr, nil, [nil, nil, const_THROB_SPARSE_SET]);
+				// OSCdef.newMatching(\sparseOnSet, { Synth.new(\kickDistorted); }, '/tr', s.addr, nil, [nil, nil, const_THROB_SPARSE_SET]);
 
                 OSCdef.newMatching(\tempoTrackUp, behaviourOnSpeedUpHandler, '/tr', s.addr, nil, [nil, 0, const_THROB_SPEEDUP]);
 

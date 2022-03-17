@@ -54,7 +54,6 @@ SynthDef(\steelString6, { |
   		XLine.ar(1.0,
 			Select.kr(fret, modeamps)[i], 2.2 * (6  - i)) * FSinOsc.ar(Select.kr(fret, modefreqs)[i], 0, 1 / modes)
   	});
-    Poll.kr(Impulse.kr(2), release);
 	nonHarm = FreqShift.ar(sound, TRand.ar(2000, 2015, gate)) * 0.005;
 	filterDown = XLine.ar(1754, 100 + TRand.ar(0, 200, gate), closingSpeed + TRand.ar(0, 0.03, gate));
 	filterUp = XLine.ar(100 + TRand.ar(0, 200, gate), 1754, closingSpeed + TRand.ar(0, 0.03, gate));

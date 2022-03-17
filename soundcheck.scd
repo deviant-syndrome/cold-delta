@@ -3,7 +3,14 @@ Require("bootstrap.scd");
 //
 // postln(topEnvironment);
 
+// todo: basslines
+//       cymbal textures
+//       thin string for soloing / leaks
+
+
 topEnvironment[\become].value(topEnvironment[\playMovement1]);
+
+// topEnvironment[\become].value(topEnvironment[\playLeaks]);
 //
 // topEnvironment[\become].value(Dictionary.newFrom([
 // 		\onSet, {}
@@ -35,7 +42,7 @@ topEnvironment[\become].value(topEnvironment[\playMovement1]);
 )
 
 (
-SynthDef(\hellhell, { | p1 = 0, p2 = 0, gate = 1, release = 1, amp = 1 |
+SynthDef(\hellhell, { | p1 = 0, p2 = 0, gate = 1, release = 1, amp = 0.3 |
 	var env = EnvGen.ar(Env.adsr(0.01, 0.5, 0.2, release), gate, levelScale: amp, doneAction: Done.freeSelf);
  	var sig = SinOsc.ar(XLine.ar(200, 60, 0.1), 0.1);
 	sig = Wrap.ar(sig, -0.2, 0.4);

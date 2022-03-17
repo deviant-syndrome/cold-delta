@@ -1,7 +1,5 @@
 var playMovement1 = { | time |
-
 	var strokeGate, pulse, release, pm;
-
 
 	topEnvironment.use({
 		~stopWatchContext.valueEnvir(exec: { | tick, delta |
@@ -21,7 +19,29 @@ var playMovement1 = { | time |
 
 };
 
+// ~playMovement1 = Dictionary.newFrom(
+// 	[\begin, {
+// 			// set the distorted kicks level based on weighted randomness
+// 		} ],
+// 	[\onSet, playMovement1],
+// 	[\onBeat, {}],
+// 	[\onSpeedUp, { topEnvironment[\become].value(topEnvironment[\playMovementFast]); } ],
+//     [\onSpeedDown, { topEnvironment[\unbecome].value; } ],
+// 	[\onTurnAround, {}]
+// );
+
+var prob = Pwrand.new([{}, { topEnvironment[\become].value(topEnvironment[\playLeaks]); }], [0.2, 0.8].normalizeSum, inf).asStream;
+
 ~playMovement1 = Dictionary.newFrom(
-	[\onSet, playMovement1],
-	[\onBeat, {}], // todo: this should play synth part
+	[
+	  \begin, { /* set the distorted kicks level based on weighted randomness */ },
+      \onSet, playMovement1,
+	  \onBeat, {},
+	  \onSpeedUp, { topEnvironment[\become].value(topEnvironment[\playMovementFast]); },
+	  \onTurnAround, {
+		 // topEnvironment[\become].value(topEnvironment[\playLeaks]);
+		 postln(prob.next);
+		 prob.next.value;
+	  }
+    ]
 );

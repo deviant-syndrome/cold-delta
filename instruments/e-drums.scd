@@ -41,6 +41,18 @@ SynthDef(\kick, {
 }).add;
 
 
+SynthDef(\kickDistorted, {
+	arg baseFreq = 190, amp = 0.6;
+
+	var pitchEnv = EnvGen.ar(Env.perc(0, 0.4));
+	var ampEnv =  EnvGen.ar(Env.perc(0, 2.2), levelScale: amp, doneAction: 2);
+	var kick = HPF.ar(SinOsc.ar(baseFreq * pitchEnv, 0, ampEnv), 100);
+	kick = (kick * 5).tanh;
+	kick = CrossoverDistortion.ar(kick, amp: 0.5, smooth: 0.5, mul: 0.6, add: 0);
+	Out.ar(0, kick.dup(2) * 0.2)
+}).play;
+
+
 SynthDef(\ride, {
 	arg amp = 0.4;
 

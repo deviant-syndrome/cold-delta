@@ -8,6 +8,8 @@ var playMovementFast = { | time |
 };
 
 ~playMovementFast = Dictionary.newFrom(
-	[\onSet, playMovementFast],
-	[\onBeat, {}], // todo: this should play synth part
+	[
+	  \onSet, playMovementFast,
+	  \onSpeedDown, { topEnvironment[\unbecome].value; }
+	]
 );

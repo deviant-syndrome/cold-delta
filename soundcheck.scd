@@ -7,7 +7,6 @@ Require("bootstrap.scd");
 //       cymbal textures
 //       thin string for soloing / leaks
 
-
 topEnvironment[\become].value(topEnvironment[\playMovement1]);
 
 // topEnvironment[\become].value(topEnvironment[\playLeaks]);

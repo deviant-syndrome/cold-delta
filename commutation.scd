@@ -1,6 +1,3 @@
-// todo: rewrite with contexts instead
-
-
 ~globalRouting[\throbe][\jack].value(\throbBlast);
 
 currentEnvironment.use({
@@ -34,7 +31,11 @@ currentEnvironment.use({
 ~globalRouting[\chuggs][\gain].set(\gains, 0.3);
 ~globalRouting[\chuggs][\gain].set(\pos, -1);
 
-~globalRouting[\chuggs][\vstInsert].value("/Library/Audio/Plug-Ins/VST3/NadIR.vst3", false);
-~globalRouting[\chuggs][\vstInsert].value("/Library/Audio/Plug-Ins/VST3/Emissary.vst3", true);
+~configContext.valueEnvir(exec: { | config |
+	currentEnvironment.use({
+		~globalRouting[\chuggs][\vstInsert].value(config["vst"]["cabsim.path"], false);
+		~globalRouting[\chuggs][\vstInsert].value(config["vst"]["ampsim.path"], true);
+	});
+});
 
 ~globalRouting[\synth1][\send].value(\delayLine);

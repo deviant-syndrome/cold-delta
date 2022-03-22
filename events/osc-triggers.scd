@@ -3,6 +3,7 @@ var behaviourOnSpeedUpHandler;
 var behaviourOnSpeedDownHandler;
 var behaviourTurnAroundHandler;
 var behaviourOnBeatHandler;
+var behaviourDynamicsHandler;
 
 OSCdef.freeAll;
 
@@ -23,7 +24,27 @@ behaviourOnSpeedDownHandler = { | msg |
 };
 
 behaviourTurnAroundHandler = { | msg |
+   ~alterCymbalTexture.value;
    ~behaviour[\onTurnAround].value;
+};
+
+behaviourDynamicsHandler = { | dynType |
+    switch(dynType,
+        112, ~behaviour[\onModerateVolume].value,
+        113, ~behaviour[\onHighVolume].value,
+        114, ~behaviour[\onQuietVolume].value,
+        { });
+
+    switch(dynType,
+        112, { postln("MODERATE!"); },
+        113, { postln("INTENSE!"); },
+        114, { postln("QUIET!");
+        	topEnvironment.use({
+                ~globalRouting[\throbe][\strip].set(\level, 0);
+            });
+         },§
+        { });
+
 };
 
 currentEnvironment.use({
@@ -45,6 +66,8 @@ currentEnvironment.use({
                 OSCdef.newMatching(\tempoTrackDown, behaviourOnSpeedDownHandler, '/tr', s.addr, nil, [nil, 0, const_THROB_SPEEDDOWN]);
 
                 OSCdef.newMatching(\turnArounds, behaviourTurnAroundHandler, '/tr', s.addr, nil, [nil, 1, 488.0]);
+
+                OSCdef.newMatching(\dynamics, { | msg | behaviourDynamicsHandler.value(msg[3]) }, '/tr', s.addr, nil, [nil, 4, nil]);
 
 		});
 	}

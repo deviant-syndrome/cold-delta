@@ -7,9 +7,20 @@ Require("bootstrap.scd");
 //       cymbal textures
 //       thin string for soloing / leaks
 
-topEnvironment[\become].value(topEnvironment[\playMovement1]);
+// topEnvironment[\become].value(topEnvironment[\playMovement1]);
 
 // topEnvironment[\become].value(topEnvironment[\playLeaks]);
+
+// topEnvironment[\become].value(topEnvironment[\playDiads]);
+
+topEnvironment.use({
+	~globalRouting[\throbe][\send].value(\cymbalTexture, [\out, ~globalRouting[\cymbals][\busNum]]);
+});
+topEnvironment.use({
+	~globalRouting[\throbe][\strip].set(\level, 0.3);
+});
+topEnvironment[\become].value(topEnvironment[\playMovement1]);
+
 //
 // topEnvironment[\become].value(Dictionary.newFrom([
 // 		\onSet, {}
@@ -21,6 +32,37 @@ topEnvironment[\become].value(topEnvironment[\playMovement1]);
 // 	).play;
 
 )
+
+
+(
+
+	topEnvironment.use({
+		~globalRouting[\throbe][\strip].set(\level, 0);
+	});
+topEnvironment[\become].value(topEnvironment[\playDiads]);
+
+)
+
+(
+	topEnvironment.use({
+		~globalRouting[\throbe][\send].value(\cymbalTexture, [\out, ~globalRouting[\cymbals][\busNum]]);
+	});
+	topEnvironment.use({
+		~globalRouting[\throbe][\strip].set(\level, 0.2);
+	});
+	topEnvironment[\become].value(topEnvironment[\playMovement1]);
+)
+
+
+
+(
+	o = Server.default.options;
+
+o.inDevice = "MacBook Pro Microphone";
+o.outDevice = "BlackHole 16ch";
+Server.default.boot;
+// o.outDevice = "MacBook Pro Microphone"
+	)
 
 (
 ~globalRouting[\chuggs][\gain].set(\gains, 0.4);

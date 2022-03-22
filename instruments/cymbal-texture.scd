@@ -1,10 +1,12 @@
-SynthDef(\cymbalTexture, { | in = 0, out = 0 |
+SynthDef(\cymbalTexture, { | in = 0, out = 0, cymbalFilter = 15010, cymbalDucking = 1, level = 1 |
 
-	var lodriver, locutoffenv, hidriver, hicutoffenv, freqs, res, thwack;
-	var amp = Amplitude.ar(in: In.ar(in, 1), attackTime: 0.01, releaseTime: 0.3, mul: 1.0, add: 0.0);
+	var lodriver, locutoffenv, hidriver, hicutoffenv, freqs, res, thwack, ducking;
+	var amp = Amplitude.ar(in:
+		Limiter.ar(in: In.ar(in, 1), level: 1.0 * cymbalDucking, dur: 0.05),
+		attackTime: 0.01, releaseTime: 0.3, mul: 1.0, add: 0.0);
 
 
-	locutoffenv = 15000 + 10;
+	locutoffenv = cymbalFilter;
 
 	lodriver = LPF.ar(WhiteNoise.ar(0.1), locutoffenv);
 
@@ -26,8 +28,8 @@ SynthDef(\cymbalTexture, { | in = 0, out = 0 |
 
 	res    = Ringz.ar(lodriver + hidriver + thwack, freqs).mean;
 
+    ducking = Clip.ar(in: (1 - amp), lo: 0.0, hi: 1.0);
 
-
-	Out.ar(out, (((res * 1) + (lodriver * 2) + thwack) * 0.01).dup * (1 - amp));
+	Out.ar(out, (((res * 1) + (lodriver * 2) + thwack) * 0.01).dup * ducking * level);
 
 }).add;

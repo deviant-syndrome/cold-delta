@@ -1,7 +1,7 @@
 SynthDef(\bells, { |out=0, freq=440, amp=0.5, gate=1, c3=17, sustain = 0.3, pan=0 |
 	var snd, snd2;
 	var env = Env.perc(0.01, 0.8);
-		var env2 = Env.adsr(0.01, 0.5, sustain, 1.4);
+		// var env = Env.adsr(0.01, 0.5, sustain, 1.4);
 
 
 	var body = RLPF.ar(Saw.ar(freq, EnvGen.ar(env, gate, doneAction: 2)), XLine.ar(1800, 160, 0.5)) ! 2;
@@ -14,12 +14,12 @@ SynthDef(\bells, { |out=0, freq=440, amp=0.5, gate=1, c3=17, sustain = 0.3, pan=
 		var pdi=LinLin.ar((2pi-pd).max(0),0,2pi,0,1);
 		snd2=Lag.ar(SinOsc.ar(0,pdres)*pdi,1/freqBase).dup;
 		snd2=Splay.ar(snd2);
-	snd2=snd2*EnvGen.ar(Env.perc(0.1,1.4)) * 0.1;
+	snd2=snd2 *EnvGen.ar(Env.perc(0.1,1.4)) * 0.1;
 
 	    snd =  body + snd2;
 		snd = snd*0.1 + BBandPass.ar(snd, 751,0.075) + BBandPass.ar(snd, 1460,0.075) + BBandPass.ar(snd, 2841,0.075);
 
 
-	Out.ar(out, snd * 0.1);
+	Out.ar(out, snd * amp);
 
 }).add;

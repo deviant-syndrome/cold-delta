@@ -21,9 +21,9 @@ currentEnvironment.use({
 
 // ~globalRouting[\throbe][\gain].set(\gains, 0.0); // debug
 
-~globalRouting[\throbe][\send].value(\cymbalTexture, [\out, ~globalRouting[\cymbals][\busNum]]);
+// ~globalRouting[\throbe][\send].value(\cymbalTexture, [\out, ~globalRouting[\cymbals][\busNum]]);
 
-~globalRouting[\throbLookAhead][\jack].value(\throbBlast, [\offsetSeconds, 0]);
+~globalRouting[\throbLookAhead][\jack].value(\throbBlast, [\offsetSeconds, 0.0]);
 ~globalRouting[\throbLookAhead][\send].value(\throbListenLookAhead);
 ~globalRouting[\throbLookAhead][\gain].set(\gains, 0.0);
 
@@ -38,4 +38,6 @@ currentEnvironment.use({
 	});
 });
 
+~globalRouting[\synth1][\send].value(\reverb);
 ~globalRouting[\synth1][\send].value(\delayLine);
+~globalRouting[\synth1][\gain].set(\gains, 0.5);
